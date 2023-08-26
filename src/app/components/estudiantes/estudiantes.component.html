@@ -1,0 +1,98 @@
+<div class="container mt-5">
+  <div class="btn-group mb-3" role="group" aria-label="Basic example">
+    <a class="btn btn-primary" [routerLink]="['/promedioEstudiantes']">Promedio Estudiantes</a>
+  </div>
+
+  <!-- CheckBoxes comentado para usar los radio button
+  <div>
+    <label>
+      <input type="radio" name="filtroEstado" [(ngModel)]="filtroEstado" value="TODO">
+      Mostrar Todo</label>
+    <label>
+      <input type="radio" name="filtroEstado" [(ngModel)]="filtroEstado" value="Aprobado">
+      Mostrar Aprobados   </label>
+    <label>
+      <input type="radio" name="filtroEstado" [(ngModel)]="filtroEstado" value="Reprobado">
+      Mostrar Reprobados
+    </label>
+  </div>
+  -->
+
+  <!-- Uso del componente radio-button-->
+  <app-radio-buttons
+    [totalEstudiantes]="totalEstudiantes()"
+    [totalAprobados]="totalAprobados()"
+    [totalReprobados]="totalReprobados()"
+    (contadorChange)="contadorEstudiantesButtonChange($event)"
+  ></app-radio-buttons>
+
+  <div class="row">
+    <div class="input-group">
+      <input type="text" [(ngModel)]="nombre" class="form-control form-control-lg" placeholder="Nombre">
+      <input type="text" [(ngModel)]="apellido" class="form-control form-control-lg" placeholder="Apellido">
+      <input type="text" [(ngModel)]="cedula" class="form-control form-control-lg" placeholder="Cédula">
+      <input type="text" [(ngModel)]="asignatura" class="form-control form-control-lg" placeholder="Asignatura">
+      <input type="number" [(ngModel)]="nota1" class="form-control form-control-lg" placeholder="Nota1">
+      <input type="number" [(ngModel)]="nota2" class="form-control form-control-lg" placeholder="Nota2">
+      <button class="btn btn-primary" (click)="agregarEstudiante()">Agregar</button>
+    </div>
+
+    <div class="text-center mt-3">
+      <div *ngIf="estudiantesService.listaEstudiantes.length===0" class="card p-2">
+        <h6>No hay Estudiantes registrados</h6>
+      </div>
+
+      <table  *ngIf="estudiantesService.listaEstudiantes.length > 0" class="table table-light bdr">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Cédula</th>
+            <th scope="col">Asignatura</th>
+            <th scope="col">Nota 1</th>
+            <th scope="col">Nota 2</th>
+            <th scope="col">Promedio</th>
+            <th scope="col">Estado</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <!-- Es tbody para usar con checkboxes
+        <tbody *ngFor="let estudiante of filtrarEstudiantes(); let i=index" class="text-center">
+          <tr>
+            <td scope="col">{{ estudiante.nombre }}</td>
+            <td>{{ estudiante.apellido }}</td>
+            <td>{{ estudiante.cedula }}</td>
+            <td>{{ estudiante.asignatura }}</td>
+            <td>{{ estudiante.nota1 }}</td>
+            <td>{{ estudiante.nota2 }}</td>
+            <td>{{ estudiante.promedio }}</td>
+            <td>{{ estudiante.estado }}</td>
+            <td>
+              <span class="cursor text-danger" (click)="eliminarEstudiante(i)">
+                <i class="bi bi-file-earmark-x-fill"></i>
+              </span>
+          </tr>
+        </tbody>
+        -->
+
+        <tbody *ngFor="let estudiante of filtrarEstudiantes(); let i=index" class="text-center">
+          <tr *ngIf="seleccionRadioButton === 'TODO' || seleccionRadioButton === estudiante.estado">
+            <td scope="col">{{ estudiante.nombre }}</td>
+            <td>{{ estudiante.apellido }}</td>
+            <td>{{ estudiante.cedula }}</td>
+            <td>{{ estudiante.asignatura }}</td>
+            <td>{{ estudiante.nota1 }}</td>
+            <td>{{ estudiante.nota2 }}</td>
+            <td>{{ estudiante.promedio }}</td>
+            <td>{{ estudiante.estado }}</td>
+            <td>
+              <span class="cursor text-danger" (click)="eliminarEstudiante(i)">
+                <i class="bi bi-file-earmark-x-fill"></i>
+              </span>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+input{
+    text-align: center;
+    height:fit-content;
+}
+
+.form-control-lg{
+    font-size: x-large;
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+.bdr {
+  border-radius: 6px;
+  overflow: hidden;
+}
